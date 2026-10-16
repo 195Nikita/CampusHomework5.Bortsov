@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore and run xUnit
+        run: dotnet test homework-5/tests/CampusBookingService.Tests/CampusBookingService.Tests.csproj --configuration Release
+
+  migration-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify migration phases
+        run: |
+          test -s homework-5/migrations/01_expand.sql
+          test -s homework-5/migrations/02_migrate.sql
+          test -s homework-5/migrations/03_contract.sql

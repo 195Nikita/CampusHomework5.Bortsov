@@ -1,0 +1,3 @@
+* @repository-owner
+/homework-5/migrations/ @repository-owner @database-reviewer
+/homework-5/docs/adr/ @repository-owner @tech-lead
